@@ -17,6 +17,7 @@ const AppContent: React.FC = () => {
   const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('records');
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // 从 localStorage 加载数据
