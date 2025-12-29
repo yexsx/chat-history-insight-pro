@@ -16,7 +16,7 @@ import {
   Cell
 } from 'recharts';
 import { ChatData } from '../types';
-import { formatMonthDay, getYear } from '../utils';
+import { getYear } from '../utils';
 import { ICONS } from '../constants';
 
 interface KeywordStatsProps {
@@ -24,12 +24,6 @@ interface KeywordStatsProps {
 }
 
 type TimeDimension = 'day' | 'week' | 'month';
-
-interface KeywordCount {
-  keyword: string;
-  count: number;
-}
-
 interface TimeSeriesData {
   date: string;
   [keyword: string]: string | number;
@@ -155,26 +149,26 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
   }
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="h-full overflow-y-auto custom-scrollbar p-4 md:p-6">
+      <div className="max-w-7xl mx-auto space-y-4 md:space-y-6">
         {/* 标题和控制栏 */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 md:mb-6 gap-3">
           <div>
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
               关键词统计
             </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
               {data.contact.nickname} • 共 {data.chat_records.length} 条匹配记录
             </p>
           </div>
         </div>
 
         {/* 视图切换 */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4 mb-4 md:mb-6">
+          <div className="flex items-center gap-1 md:gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-0.5 md:p-1">
             <button
               onClick={() => setViewType('trend')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors ${
                 viewType === 'trend'
                   ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-indigo-300 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
@@ -184,7 +178,7 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
             </button>
             <button
               onClick={() => setViewType('distribution')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 md:px-4 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors ${
                 viewType === 'distribution'
                   ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-indigo-300 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
@@ -195,10 +189,10 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
           </div>
 
           {viewType === 'trend' && (
-            <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+            <div className="flex items-center gap-1 md:gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-0.5 md:p-1">
               <button
                 onClick={() => setTimeDimension('day')}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md text-[10px] md:text-xs font-medium transition-colors ${
                   timeDimension === 'day'
                     ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-indigo-300 shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
@@ -208,7 +202,7 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
               </button>
               <button
                 onClick={() => setTimeDimension('week')}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md text-[10px] md:text-xs font-medium transition-colors ${
                   timeDimension === 'week'
                     ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-indigo-300 shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
@@ -218,7 +212,7 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
               </button>
               <button
                 onClick={() => setTimeDimension('month')}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md text-[10px] md:text-xs font-medium transition-colors ${
                   timeDimension === 'month'
                     ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-indigo-300 shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
@@ -231,12 +225,12 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
         </div>
 
         {/* 关键词频率排行榜 */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <h3 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 md:mb-4 flex items-center gap-2">
             <ICONS.Tag />
             关键词频率 Top 10
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {keywordCounts.map((item, index) => (
               <div
                 key={item.keyword}
@@ -267,13 +261,13 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
 
         {/* 趋势图表 */}
         {viewType === 'trend' && timeSeriesData.length > 0 && (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <h3 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 md:mb-4 flex items-center gap-2">
               <ICONS.LineChart />
               关键词趋势分析
             </h3>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={timeSeriesData}>
+            <ResponsiveContainer width="100%" height={300} className="md:h-[400px]">
+              <LineChart data={timeSeriesData} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-700" />
                 <XAxis
                   dataKey="date"
@@ -315,13 +309,13 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
           <>
             {/* 柱状图 - 按年份分布 */}
             {yearlyDistribution.length > 0 && (
-              <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                <h3 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 md:mb-4 flex items-center gap-2">
                   <ICONS.BarChart />
                   按年份分布
                 </h3>
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={yearlyDistribution}>
+                <ResponsiveContainer width="100%" height={300} className="md:h-[400px]">
+                  <BarChart data={yearlyDistribution} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-700" />
                     <XAxis
                       dataKey="year"
@@ -357,12 +351,12 @@ export const KeywordStats: React.FC<KeywordStatsProps> = ({ data }) => {
 
             {/* 饼图 - 关键词占比 */}
             {keywordCounts.length > 0 && (
-              <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-slate-800 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+                <h3 className="text-base md:text-lg font-bold text-slate-800 dark:text-slate-200 mb-3 md:mb-4 flex items-center gap-2">
                   <ICONS.PieChart />
                   关键词占比分布
                 </h3>
-                <ResponsiveContainer width="100%" height={400}>
+                <ResponsiveContainer width="100%" height={300} className="md:h-[400px]">
                   <PieChart>
                     <Pie
                       data={keywordCounts.slice(0, 8)}
