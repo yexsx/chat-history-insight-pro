@@ -57,14 +57,15 @@ const MessageItem: React.FC<{
 
 export const ChatHistory: React.FC<ChatHistoryProps> = ({ record }) => {
   return (
-    <div className="bg-slate-50/50 dark:bg-slate-900/50 rounded-xl md:rounded-2xl p-4 md:p-6 border border-slate-100 dark:border-slate-700">
-      <div className="space-y-2 mb-6 md:mb-8 text-center">
-        <div className="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-[9px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-          Context Preview (ID: {record.local_id})
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="bg-slate-50/50 dark:bg-slate-900/50 rounded-xl md:rounded-2xl p-4 md:p-6 pb-6 md:pb-8 border border-slate-100 dark:border-slate-700">
+        <div className="space-y-2 mb-6 md:mb-8 text-center">
+          <div className="inline-block px-2 md:px-3 py-0.5 md:py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-[9px] md:text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+            Context Preview (ID: {record.local_id})
+          </div>
         </div>
-      </div>
 
-      <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto">
         {/* Front Context */}
         {record.context_front_records.map((msg) => (
           <MessageItem key={msg.local_id} msg={msg} />
@@ -95,6 +96,7 @@ export const ChatHistory: React.FC<ChatHistoryProps> = ({ record }) => {
         {record.context_last_records.map((msg) => (
           <MessageItem key={msg.local_id} msg={msg} />
         ))}
+        </div>
       </div>
     </div>
   );
